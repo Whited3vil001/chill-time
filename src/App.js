@@ -1,24 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+// src/App.js
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import "./App.css";
+import Search from "./components/Search";
+import TVShowDetails from "./components/TVShowDetails";
+import Favorites from "./components/Favorites";
+import { FavoritesProvider } from "./context/FavoritesContext";
+import { Link } from "react-router-dom";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <FavoritesProvider>
+      <Router>
+        <div className="App">
+          <h1>ChillTime</h1>
+          <div>
+            <nav>
+              <button>
+                <Link to="/">Home</Link>
+              </button>
+
+              <button>
+                <Link to="/favorites">Favorites</Link>
+              </button>
+            </nav>
+          </div>
+          <Routes>
+            <Route path="/" element={<Search />} />
+            <Route path="/show/:id" element={<TVShowDetails />} />
+            <Route path="/favorites" element={<Favorites />} />
+          </Routes>
+        </div>
+      </Router>
+    </FavoritesProvider>
   );
 }
 
